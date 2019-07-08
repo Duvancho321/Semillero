@@ -6,12 +6,15 @@
 Este repositorio contiene las actividades realizadas en el semillero de
 R de la facultad de ciencias agrarias
 
-  - sdjfhjsdknfksdjf: <a href="nue.html">Enlace</a>
+Para más información consulta:
+[aquí](https://unal-semilleror-facca.github.io/)
 
-  - wjfhe : <a href="nue.html"> Descarga</a>
+## Proyectos
 
-(nue.html)\[dsfgdsgds\]
+<details>
 
-href: nue.html
+<summary>2019-S1</summary>
 
-[I’m an inline-style link](nue.html)
+<p>
+
+##### \- [Actividad 1](https://duvancho321.github.io/Semillero/Actividad1.html)

@@ -1,0 +1,65 @@
+/* Modificando:
+- alineacion de texto
+- color de texto 
+- tamaño de texto
+- color de fondo */
+body{
+  text-align:justify;
+  color:black;
+  font-size: 18px;
+  background-color:#ffffff;
+}
+
+/*Modificando color de fondo de tabla de contenido, #ffffff por defecto */
+.list-group-item {
+  background-color:#01010c0a;
+}
+
+/*Modificando:
+- color de letra hide codigo
+- color de fondo de la division del hide*/
+div.sourceCode {
+    color: #1f1c1b;
+    background-color: #01010c0a;
+}
+
+
+/*Modificando propiedades del codigo chunk:
+- color: color de variables declaradas
+- background-color: color de fondo de codigo */
+
+pre {
+    display: block;
+    padding: 10px;
+    margin: 0 0 10.5px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #3c9917;
+    background-color: #a3e0d8;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+
+/* Color de boton seleccionado
+- color de letra
+- color de boton*/
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+    color: #462f9e;
+    background-color: #83b1df;
+}
+
+/* Color de botones no seleccionados*/
+a {
+    color: #00b6ff;
+}
+
+/* Color de codigo resaltado, NO FUNCIONA*/
+code {
+    color: #7b68ee;
+    background-color: 
+      rgba(158, 37, 37, 0.16);
+}
