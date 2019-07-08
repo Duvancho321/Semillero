@@ -16,6 +16,12 @@ Este repositorio contiene las actividades realizadas en el semillero de R de la 
 
 Para más información consulta: <a href="https://unal-semilleror-facca.github.io/" target="_blank">aquí</a>
 
+<center>
+
+![](pub.gif)
+
+</center>
+
 ## Proyectos
 
 <details><summary>2019-S1</summary>

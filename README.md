@@ -9,6 +9,12 @@ R de la facultad de ciencias agrarias
 Para más información consulta:
 <a href="https://unal-semilleror-facca.github.io/" target="_blank">aquí</a>
 
+<center>
+
+![](pub.gif)
+
+</center>
+
 ## Proyectos
 
 <details>
