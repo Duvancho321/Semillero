@@ -1,7 +1,9 @@
 ---
 title: "Actividad 1"
 subtitle: "Bases de datos del Banco Mundial"
-author: "Semillero R - FacCA"
+author:
+  - "Semillero R - FacCA"
+  - "Duvan Nieves"
 date: "2019-07-06"
 output:
   html_document:
@@ -50,7 +52,7 @@ library(ggpubr)
 library(stringi)
 ```
 
-# Lectura de datos
+# Lectura de datos {.tabset .tabset-pills}
 
 ## Selección de filas
 
@@ -218,7 +220,9 @@ write.csv(x = df_unida,file = "DatosCompletos", row.names = F, fileEncoding = "U
 ```
 
 
-## Punto 2
+## Punto 2 {.tabset .tabset-pills}
+
+### Graficos de prueba
 
 ```{r,fig.width=9,fig.height=20,dpi=150}
 ggarrange(
@@ -275,6 +279,33 @@ ggarrange(
   ncol = 1,
   nrow = 4
 )
+```
+
+
+
+### Grafico interactivo
+
+```{r}
+ggplotly(
+    df_unida %>% 
+      select(pais,densidad17) %>% 
+      arrange(desc(densidad17)) %>% 
+      slice(c(1:10)) %>%
+      ggplot(., aes(x=reorder(pais,+densidad17),y=densidad17,color=pais)) +
+      geom_point(size=3)+
+      geom_segment(aes(x=reorder(pais,+densidad17), 
+                   xend=reorder(pais,+densidad17), 
+                   y=0, 
+                   yend=densidad17,
+                   color=pais))+
+      labs(x="País", y ="Personas por kilometro", 
+           subtitle = "10 paises con mayor densidad poblacional",fill="")+
+      theme_bw()+
+      theme(plot.subtitle = element_text(hjust=0.5),legend.position = "none")+
+      coord_flip()
+)
+
+
 ```
 
 
