@@ -16,11 +16,11 @@ Este repositorio contiene las actividades realizadas en el semillero de R de la 
 
 Para más información consulta: <a href="https://unal-semilleror-facca.github.io/" target="_blank">aquí</a>
 
-<center>
 
-![](pub.gif)
-
-</center>
+```{r, echo=FALSE, out.width= "100", out.height="80",fig.align='center'}
+knitr::include_graphics("pub.gif")
+```
+  
 
 ## Proyectos
 

@@ -67,69 +67,69 @@ filas <- c(6, 35, 48, 60:64, 67, 68, 72, 73, 78, 94, 97, 101:104,
 
 ```{r}
 #Densidad Poblacional
-densidad <- read.csv(file="DensidadPob.csv", encoding = "UTF-8",
+densidad <- read.csv(file="DatAct1/DensidadPob.csv", encoding = "UTF-8",
                      skip = 4) %>% 
   select(Country.Name, X2017) %>%
   rename(pais = Country.Name, densidad17 = X2017) %>% 
   slice(-filas)
 
 #Desempleo
-desempleo <- read.csv(file = "Desempleo.csv", skip = 4, encoding = "UTF-8") %>% 
+desempleo <- read.csv(file = "DatAct1/Desempleo.csv", skip = 4, encoding = "UTF-8") %>% 
   select(Country.Name, X2017) %>% 
   rename(pais = Country.Name, desempleo17 = X2017) %>% 
   slice(-filas)
 
 #Camas hospitalaria
-camas <- read.csv(file = "CamasHospital.csv", skip = 4,
+camas <- read.csv(file = "DatAct1/CamasHospital.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2014) %>% 
   rename(pais = Country.Name, camas14 = X2014) %>% 
   slice(-filas)
 
 #Cajeros automaticos
-cajeros <- read.csv(file = "Cajeros.csv", skip = 4,
+cajeros <- read.csv(file = "DatAct1/Cajeros.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2017) %>% 
   rename(pais = Country.Name, cajeros17 = X2017) %>% 
   slice(-filas)
 
 #Contaminación por PM2.5
-pm2.5 <- read.csv(file = "ContaminacionPM25.csv", skip = 4,
+pm2.5 <- read.csv(file = "DatAct1/ContaminacionPM25.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2017) %>% 
   rename(pais = Country.Name, pm2517 = X2017) %>% 
   slice(-filas)
 
 #Población rural
-pob_rural <- read.csv(file = "PobRural.csv", skip = 4,
+pob_rural <- read.csv(file = "DatAct1/PobRural.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2017) %>% 
   rename(pais = Country.Name, pobRural17 = X2017) %>% 
   slice(-filas)
 
 #Tierras cultivables
-tierra_cult <- read.csv(file = "TierrasCultivables.csv", skip = 4,
+tierra_cult <- read.csv(file = "DatAct1/TierrasCultivables.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2016) %>% 
   rename(pais = Country.Name, tierrasCult16 = X2016) %>% 
   slice(-filas)
 
 #Consumo de fertilizantes
-fertilizantes <- read.csv(file = "ConsumoFertilizantes.csv", skip = 4,
+fertilizantes <- read.csv(file = "DatAct1/ConsumoFertilizantes.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2016) %>% 
   rename(pais = Country.Name, fertil16 = X2016) %>% 
   slice(-filas)
 
 #Acceso a electricidad
-electricidad <- read.csv(file = "AccesoElectricidad.csv", skip = 4,
+electricidad <- read.csv(file = "DatAct1/AccesoElectricidad.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2016) %>% 
   rename(pais = Country.Name, electri16 = X2016) %>% 
   slice(-filas)
 
 #PIB
-pib <- read.csv(file = "PIB.csv", skip = 4,
+pib <- read.csv(file = "DatAct1/PIB.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2016) %>% 
   rename(pais = Country.Name, pib16 = X2016) %>% 
@@ -137,35 +137,35 @@ pib <- read.csv(file = "PIB.csv", skip = 4,
 
 #Crecimiento PIB
 
-cto_pib <- read.csv(file = "CrecimientoPIB.csv", skip = 4,
+cto_pib <- read.csv(file = "DatAct1/CrecimientoPIB.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2016) %>% 
   rename(pais = Country.Name, cto_pib16 = X2016) %>% 
   slice(-filas)
 
 #Gasto público en educación
-gasto_edu <- read.csv(file = "GastoPublico.csv", skip = 4,
+gasto_edu <- read.csv(file = "DatAct1/GastoPublico.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2016) %>% 
   rename(pais = Country.Name, gasto_edu16 = X2016) %>% 
   slice(-filas)
 
 #Gasto militar
-gasto_militar <- read.csv(file = "GastoMilitar.csv", skip = 4,
+gasto_militar <- read.csv(file = "DatAct1/GastoMilitar.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2017) %>% 
   rename(pais = Country.Name, gasto_militar17 = X2017) %>% 
   slice(-filas)
 
 #Gasto I+D
-gasto_id <- read.csv(file = "GastoID.csv", skip = 4,
+gasto_id <- read.csv(file = "DatAct1/GastoID.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2016) %>% 
   rename(pais = Country.Name, gasto_id16 = X2016) %>% 
   slice(-filas)
 
 #Deuda externa acumulada
-deuda <- read.csv(file = "GastoID.csv", skip = 4,
+deuda <- read.csv(file = "DatAct1/GastoID.csv", skip = 4,
                   encoding = "UTF-8") %>% 
   select(Country.Name, X2016) %>% 
   rename(pais = Country.Name, deuda16 = X2016) %>% 
@@ -216,7 +216,7 @@ df_unida
   - **Exportando Datos Finales**
 
 ```{r, eval=FALSE}
-write.csv(x = df_unida,file = "DatosCompletos", row.names = F, fileEncoding = "UTF-8")
+write.csv(x = df_unida,file = "DatosCompletosAct1", row.names = F, fileEncoding = "UTF-8")
 ```
 
 
