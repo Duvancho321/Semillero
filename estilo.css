@@ -1,4 +1,4 @@
-﻿/* Modificando:
+/* Modificando:
 - alineacion de texto
 - color de texto 
 - tamaño de texto
@@ -64,7 +64,8 @@ code {
       rgba(158, 37, 37, 0.16);
 }
 
-/* Codigo sin barra de dezplazamiento*/
+/* Codigo sin barra de dezplazamiento
 div.sourceCode {
     overflow: inherit;
 }
+*/
