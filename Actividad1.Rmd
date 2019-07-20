@@ -4,7 +4,7 @@ subtitle: "Bases de datos del Banco Mundial"
 author:
   - "Semillero R - FacCA"
   - "Duvan Nieves"
-date: "2019-07-06"
+date: "`r Sys.Date()`"
 output:
   html_document:
     css: estilo.css
@@ -30,11 +30,10 @@ library(dplyr)
 library(ggplot2)
 library(plotly)
 library(DT)
-library(gridExtra)
-library(ggExtra)
 library(forcats)
 library(ggpubr)
 library(stringi)
+library(ggridges)
 ```
 
 # Bibliotecas necesarias
@@ -45,11 +44,10 @@ library(dplyr)
 library(ggplot2)
 library(plotly)
 library(DT)
-library(gridExtra)
-library(ggExtra)
 library(forcats)
 library(ggpubr)
 library(stringi)
+library(ggridges)
 ```
 
 # Lectura de datos {.tabset .tabset-pills}
@@ -186,29 +184,42 @@ deuda <- read.csv(file = "DatAct1/GastoID.csv", skip = 4,
 
 ## Punto 1
 
-- Funciones útiles para unir bases de datos (**solo de dos en dos**):
-    - `merge()`: Funcion del paquete base
-    - `inner_join()`: Funcion dplyr
+- Funciones útiles para unir bases de datos (**sólo de dos en dos**):
+    - `merge()`: función del paquete base.
+    - `inner_join()`: función del paquete `dplyr`.
+    
+    
+```{r}
+# Prueba con merge()
+prueba_merge <- merge(cajeros, camas) %>% 
+  merge(desempleo) %>% 
+  merge(tierra_cult)
+
+# Prueba con inner_join()
+prueba_inner <- inner_join(cajeros, camas) %>% 
+  inner_join(desempleo) %>% 
+  inner_join(tierra_cult)
+```
+
 
 ```{r}
 
 #Con merge ss <- merge(cajeros,camas) %>%  merge(desempleo)
 
-df_unida <- cajeros %>% 
-  inner_join(camas) %>% 
-  inner_join(cto_pib) %>%  
-  inner_join(densidad) %>% 
-  inner_join(desempleo) %>% 
-  inner_join(deuda) %>%  
-  inner_join(electricidad) %>%  
-  inner_join(fertilizantes) %>%  
-  inner_join(gasto_edu) %>% 
-  inner_join(gasto_id) %>% 
-  inner_join(gasto_militar) %>% 
-  inner_join(pib) %>% 
-  inner_join(pm2.5) %>% 
-  inner_join(pob_rural) %>% 
-  inner_join(tierra_cult)
+df_unida <- merge(cajeros, camas) %>% 
+  merge(cto_pib) %>% 
+  merge(densidad) %>% 
+  merge(desempleo) %>% 
+  merge(deuda) %>% 
+  merge(electricidad) %>% 
+  merge(fertilizantes) %>% 
+  merge(gasto_edu) %>% 
+  merge(gasto_id) %>% 
+  merge(gasto_militar) %>% 
+  merge(pib) %>% 
+  merge(pm2.5) %>% 
+  merge(pob_rural) %>% 
+  merge(tierra_cult)
 
 df_unida
 ```
@@ -220,11 +231,21 @@ write.csv(x = df_unida,file = "DatosCompletosAct1", row.names = F, fileEncoding 
 ```
 
 
-## Punto 2 {.tabset .tabset-pills}
+## Punto 2 {.tabset .tabset-pills }
+
+### Datos 
+
+```{r}
+  df_unida %>% 
+  select(pais,densidad17) %>% 
+  arrange(desc(densidad17)) %>% 
+  slice(c(1:10))
+```
+
 
 ### Graficos de prueba
 
-```{r,fig.width=9,fig.height=20,dpi=150}
+```{r,fig.width=9,fig.height=20,dpi=100}
 ggarrange(
   
   #Grafico 1
@@ -309,7 +330,9 @@ ggplotly(
 ```
 
 
-## Punto 3
+## Punto 3 {.tabset .tabset-pills }
+
+### Metricas
 
 - **Correlacion paramétrica de Pearson:**
 
@@ -331,6 +354,7 @@ cor(x=df_unida$cto_pib16,y=df_unida$gasto_edu16,method = "spearman", use = "pair
 cor(x=df_unida$cto_pib16,y=df_unida$gasto_edu16,method = "kendall", use = "pairwise.complete.obs")
 ```
 
+### Gráfico
 
 - **Gráfico de dispersion interactivo**
 
@@ -348,15 +372,273 @@ ggplotly(
 ```
 
 
-## Punto 4
+## Punto 4 {.tabset .tabset-pills }
+
+- Usar la funcion `mutate()` para crear la nueva variable.
+- Usar el operador `%in%` para asignar paises dentro de un continente.
+
+### Manual
+
+- Declarar vectores para cada continente (en total seran 5 vectores).
+
+```{r}
+#Vectores Unidos
+
+#Camibio de factor a caracter
+
+df_unida <- df_unida %>% 
+  mutate(pais=as.character(pais))
+
+#Vectores de continentes
+america<- c(df_unida$pais[6],
+            df_unida$pais[9],
+            df_unida$pais[11],
+            df_unida$pais[15],
+            df_unida$pais[18],
+            df_unida$pais[21],
+            df_unida$pais[23],
+            df_unida$pais[25],
+            df_unida$pais[28],
+            df_unida$pais[36],
+            df_unida$pais[38],
+            df_unida$pais[41],
+            df_unida$pais[47],
+            df_unida$pais[50],
+            df_unida$pais[51],
+            df_unida$pais[54],
+            df_unida$pais[55],
+            df_unida$pais[57],
+            df_unida$pais[61],
+            df_unida$pais[75],
+            df_unida$pais[77],
+            df_unida$pais[79],
+            df_unida$pais[83],
+            df_unida$pais[84],
+            df_unida$pais[85],
+            df_unida$pais[94],
+            df_unida$pais[96],
+            df_unida$pais[101],
+            df_unida$pais[102],
+            df_unida$pais[103],
+            df_unida$pais[106],
+            df_unida$pais[134],
+            df_unida$pais[143],
+            df_unida$pais[153],
+            df_unida$pais[155],
+            df_unida$pais[156],
+            df_unida$pais[160],
+            df_unida$pais[169],
+            df_unida$pais[174],
+            df_unida$pais[178],
+            df_unida$pais[179],
+            df_unida$pais[186],
+            df_unida$pais[193],
+            df_unida$pais[200],
+            df_unida$pais[207],
+            df_unida$pais[210])
+asia<- c(df_unida$pais[1],
+         df_unida$pais[7],
+         df_unida$pais[10],
+         df_unida$pais[14],
+         df_unida$pais[16],
+         df_unida$pais[17],
+         df_unida$pais[24],
+         df_unida$pais[29],
+         df_unida$pais[34],
+         df_unida$pais[39],
+         df_unida$pais[45],
+         df_unida$pais[46],
+         df_unida$pais[58],
+         df_unida$pais[65],
+         df_unida$pais[67],
+         df_unida$pais[72],
+         df_unida$pais[86],
+         df_unida$pais[88],
+         df_unida$pais[89],
+         df_unida$pais[90],
+         df_unida$pais[91],
+         df_unida$pais[104],
+         df_unida$pais[107],
+         df_unida$pais[108],
+         df_unida$pais[109],
+         df_unida$pais[111],
+         df_unida$pais[114],
+         df_unida$pais[117],
+         df_unida$pais[125],
+         df_unida$pais[127],
+         df_unida$pais[136],
+         df_unida$pais[139],
+         df_unida$pais[142],
+         df_unida$pais[149],
+         df_unida$pais[151],
+         df_unida$pais[161],
+         df_unida$pais[162],
+         df_unida$pais[164],
+         df_unida$pais[168],
+         df_unida$pais[171],
+         df_unida$pais[185],
+         df_unida$pais[188],
+         df_unida$pais[194],
+         df_unida$pais[196],
+         df_unida$pais[197],
+         df_unida$pais[202],
+         df_unida$pais[208],
+         df_unida$pais[211],
+         df_unida$pais[212])
+europa<- c(df_unida$pais[2],
+           df_unida$pais[3],
+           df_unida$pais[4],
+           df_unida$pais[13],
+           df_unida$pais[19],
+           df_unida$pais[20],
+           df_unida$pais[26],
+           df_unida$pais[30],
+           df_unida$pais[40],
+           df_unida$pais[49],
+           df_unida$pais[52],
+           df_unida$pais[59],
+           df_unida$pais[60],
+           df_unida$pais[62],
+           df_unida$pais[68],
+           df_unida$pais[69],
+           df_unida$pais[74],
+           df_unida$pais[76],
+           df_unida$pais[87],
+           df_unida$pais[92],
+           df_unida$pais[93],
+           df_unida$pais[95],
+           df_unida$pais[97],
+           df_unida$pais[98],
+           df_unida$pais[105],
+           df_unida$pais[113],
+           df_unida$pais[116],
+           df_unida$pais[120],
+           df_unida$pais[121],
+           df_unida$pais[122],
+           df_unida$pais[123],
+           df_unida$pais[129],
+           df_unida$pais[135],
+           df_unida$pais[137],
+           df_unida$pais[146],
+           df_unida$pais[150],
+           df_unida$pais[158],
+           df_unida$pais[159],
+           df_unida$pais[163],
+           df_unida$pais[166],
+           df_unida$pais[167],
+           df_unida$pais[170],
+           df_unida$pais[172],
+           df_unida$pais[177],
+           df_unida$pais[182],
+           df_unida$pais[191],
+           df_unida$pais[192],
+           df_unida$pais[203],
+           df_unida$pais[205])
+
+oceania<- c(df_unida$pais[12],
+            df_unida$pais[66],
+            df_unida$pais[78],
+            df_unida$pais[99],
+            df_unida$pais[100],
+            df_unida$pais[112],
+            df_unida$pais[130],
+            df_unida$pais[141],
+            df_unida$pais[147],
+            df_unida$pais[148],
+            df_unida$pais[152],
+            df_unida$pais[154],
+            df_unida$pais[157],
+            df_unida$pais[175],
+            df_unida$pais[176],
+            df_unida$pais[199],
+            df_unida$pais[204],
+            df_unida$pais[209])
+
+africa<- c(df_unida$pais[5],
+           df_unida$pais[8],
+           df_unida$pais[22],
+           df_unida$pais[27],
+           df_unida$pais[31],
+           df_unida$pais[32],
+           df_unida$pais[33],
+           df_unida$pais[35],
+           df_unida$pais[37],
+           df_unida$pais[42],
+           df_unida$pais[43],
+           df_unida$pais[44],
+           df_unida$pais[48],
+           df_unida$pais[53],
+           df_unida$pais[56],
+           df_unida$pais[63],
+           df_unida$pais[64],
+           df_unida$pais[70],
+           df_unida$pais[71],
+           df_unida$pais[73],
+           df_unida$pais[80],
+           df_unida$pais[81],
+           df_unida$pais[82],
+           df_unida$pais[110],
+           df_unida$pais[115],
+           df_unida$pais[118],
+           df_unida$pais[119],
+           df_unida$pais[124],
+           df_unida$pais[126],
+           df_unida$pais[128],
+           df_unida$pais[131],
+           df_unida$pais[132],
+           df_unida$pais[133],
+           df_unida$pais[138],
+           df_unida$pais[140],
+           df_unida$pais[144],
+           df_unida$pais[145],
+           df_unida$pais[165],
+           df_unida$pais[173],
+           df_unida$pais[180],
+           df_unida$pais[181],
+           df_unida$pais[183],
+           df_unida$pais[184],
+           df_unida$pais[187],
+           df_unida$pais[189],
+           df_unida$pais[190],
+           df_unida$pais[195],
+           df_unida$pais[198],
+           df_unida$pais[201],
+           df_unida$pais[206],
+           df_unida$pais[213],
+           df_unida$pais[214])
+
+#Generando Variable con continente
+df_unida <- df_unida %>% 
+  mutate(continente = if_else(condition = pais %in% america,
+                              true = "América",
+                              false = if_else(condition = pais %in% asia,
+                                              true = "Asia",
+                                              false = if_else(pais %in% europa,
+                                                              true = "Europa",
+                                                              false = if_else(pais %in% oceania, true = "Oceanía",
+                                                                              false = if_else(pais %in% africa,
+                                                                                              true = "Africa",
+                                                                                              false = "Otro")))))) %>% 
+  mutate(continente = factor(continente))
+
+
+```
+
+
+### Con`countrycode`
 
 ```{r}
 #Listado de paises y contienentes
-lista_pais_continente <- data.frame(pais = countrycode::codelist$cldr.name.es, continente = countrycode::codelist$continent,  stringsAsFactors = FALSE)
+lista_pais_continente <- data.frame(pais = countrycode::codelist$cldr.name.es, 
+                                    continente2 = countrycode::codelist$continent,  
+                                    stringsAsFactors = FALSE)
 
 #Conversion a palabras sin tilde
-lista_pais_continente <- lista_pais_continente %>% mutate(pais=stri_trans_general(pais,"Latin-ASCII"))
-df_unida <- df_unida %>% mutate(pais=stri_trans_general(pais,"Latin-ASCII"))
+lista_pais_continente <- lista_pais_continente %>% 
+  mutate(pais=stri_trans_general(pais,"Latin-ASCII"))
+
+df_unida <- df_unida %>% 
+  mutate(pais=stri_trans_general(pais,"Latin-ASCII"))
 
 #Correccion de nombres 
 df_unida$pais[df_unida$pais %in%  "Arabia Saudita"] = "Arabia Saudi"
@@ -409,32 +691,58 @@ df_unida$pais[df_unida$pais %in%  "Zimbabwe"] = "Zimbabue"
 df_unida <- df_unida %>% left_join(lista_pais_continente)
 
 #Añadiendo informacio extra
-df_unida$continente[df_unida$pais %in%  "Islas del Canal"] = "Europe"
-df_unida$continente[df_unida$pais %in%  "Kosovo"] = "Europe"
-df_unida$continente[df_unida$pais %in%  "Macedonia del Norte"] = "Europe"
-df_unida$continente[df_unida$pais %in%  "Mariana"] = "Oceania"
-df_unida$continente[df_unida$pais %in%  "Ribera Occidental y Gaza"] = "Africa"
-df_unida$continente[df_unida$pais %in%  "Republica de Corea"] = "Asia"
-df_unida$continente[df_unida$pais %in%  "Isla de San Martin (parte francesa)"] = "Africa"
-df_unida$continente[df_unida$pais %in%  "Republica Popular Democratica de Corea"] = "Asia"
-df_unida$continente[df_unida$pais %in%  "Sint Maarten (Dutch part)"] = "Africa"
+df_unida$continente2[df_unida$pais %in%  "Islas del Canal"] = "Europe"
+df_unida$continente2[df_unida$pais %in%  "Kosovo"] = "Europe"
+df_unida$continente2[df_unida$pais %in%  "Macedonia del Norte"] = "Europe"
+df_unida$continente2[df_unida$pais %in%  "Mariana"] = "Oceania"
+df_unida$continente2[df_unida$pais %in%  "Ribera Occidental y Gaza"] = "Asia"
+df_unida$continente2[df_unida$pais %in%  "Republica de Corea"] = "Asia"
+df_unida$continente2[df_unida$pais %in%  "Isla de San Martin (parte francesa)"] = "Americas"
+df_unida$continente2[df_unida$pais %in%  "Republica Popular Democratica de Corea"] = "Asia"
+df_unida$continente2[df_unida$pais %in%  "Sint Maarten (Dutch part)"] = "Americas"
+
+df_unida <- df_unida %>% mutate(continente=as.factor(continente))
 
 
 #Imprimir tabla con opciones de descarga
 datatable(df_unida,extensions = 'Buttons', 
-          options = list( scrollX = TRUE, fixedColumns = TRUE, dom = 'Bfrtip',buttons = 
-                            list('copy', 'print', list( extend = 'collection', 
-                                                        buttons = c('csv', 'excel', 'pdf'), text = 'Download'))))
+          options = list( scrollX = TRUE, 
+                          fixedColumns = TRUE, 
+                          dom = 'Bfrtip',buttons = 
+                            list('copy', 
+                                 'print', 
+                                 list( extend = 'collection', 
+                                                        buttons = c('csv', 
+                                                                    'excel', 
+                                                                    'pdf'), 
+                                       text = 'Download'))))
+
+#Errores [chipre = asia, rusia = europa, turquia = asia]
 
 ```
 
 
-## Punto 5
+
+
+
+- Exportando Datos con continentes
+
+```{r,eval=FALSE}
+write.csv(x = df_unida,file = "DatosCompletosContinentesAct1", row.names = F, fileEncoding = "UTF-8")
+
+```
+
+
+## Punto 5 {.tabset .tabset-pills }
+
+### Gasto ID
+
+- **Comparación del gasto Investigacion y desarrollo por continente:**
 
 ```{r}
 ggplotly(
   df_unida %>% 
-    ggplot(data = ., mapping = aes(x=fct_infreq(as.factor(continente)),
+    ggplot(data = ., mapping = aes(x=fct_infreq(continente),
                                    y = gasto_id16, label=pais,color=continente))+
     theme_bw()+
     geom_violin(trim = F,alpha=0.3)+
@@ -446,23 +754,97 @@ ggplotly(
 
 ```
 
+### Todo
+
+- **Boxplot de todas las variables por continente (Estatico):**
+
+```{r}
+  df_unida %>% 
+    gather(key = "variable", value = "valor", -c(pais, continente, continente2)) %>% 
+    ggplot(data = ., aes(x = continente, y = valor, color = continente, label=pais)) +
+    stat_summary(fun.y = "mean",geom = "point",shape=23,size=0.3)+
+    facet_wrap(facets = ~variable, scales = "free_y") +
+    geom_boxplot() +
+    geom_violin(trim = F,alpha=0.3)+
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "top")
+```
+
+
+- **Boxplot de todas las variables por continente (interactivo):**
+
+```{r}
+ggplotly(
+  df_unida %>% 
+    gather(key = "variable", value = "valor", -c(pais, continente, continente2)) %>% 
+    ggplot(data = ., aes(x = continente, y = valor, color = continente, label=pais)) +
+    stat_summary(fun.y = "mean",geom = "point",shape=23,size=0.3)+
+    facet_wrap(facets = ~variable, scales = "free_y") +
+    geom_boxplot() +
+    geom_violin(trim = F,alpha=0.3)+
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "top"))
+```
+
+
 ## Punto 6
+
+- **Densidad de todas las variables:**
 
 ```{r}
 
 ggplotly(
-  df_unida %>% gather(key = Variable, value = valor,-c(pais,continente)) %>% 
+  df_unida %>% gather(key = Variable, value = valor,-c(pais,continente,continente2)) %>% 
     ggplot(data = .,mapping = aes(x=valor,fill=Variable)) + 
     theme_bw() +
     theme(axis.text.x = element_blank(),
           axis.ticks.x = element_blank(),
           axis.text.y = element_blank(),
-          axis.ticks.y = element_blank())+
-    theme(legend.position = "none")+
+          axis.ticks.y = element_blank(),
+          legend.position = "none")+
     geom_density(alpha=0.3)+
+    geom_rug()+
     geom_histogram(mapping = aes(y=..density..)) +
     facet_wrap(~Variable,scales = "free")
 )
 ```
 
+- **Densidad de todas las variables por continente:**
+
+```{r}
+ggplotly(
+df_unida %>% 
+  gather(key = "variable", value = "valor", -c(pais, continente,continente2)) %>% 
+  ggplot(data = ., aes(x = valor, fill = continente)) +
+  facet_wrap(facets = ~variable, scales = "free") +
+  geom_density(alpha = 0.3) + 
+  theme_bw() +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        legend.position = "top"
+        ))
+
+```
+
+- **Densidad de todas las variables por continente con `ggridges` :**
+
+```{r}
+
+df_unida %>% 
+  gather(key = "variable", value = "valor", -c(pais, continente,continente2)) %>% 
+  ggplot(data = ., aes(x = valor, fill = continente,color=continente)) +
+  facet_wrap(facets = ~variable, scales = "free") +
+  geom_density_ridges(mapping = aes(y=continente),alpha = 0.3) + 
+  theme_bw() +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        legend.position = "top")
+
+```
 

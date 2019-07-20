@@ -19,4 +19,6 @@ Para más información consulta:
 
 <p>
 
+##### \- <a href="https://duvancho321.github.io/Semillero/Recordatorio.html" target="_blank">Recordatorio</a>
+
 ##### \- <a href="https://duvancho321.github.io/Semillero/Actividad1.html" target="_blank">Actividad 1</a>
