@@ -227,7 +227,7 @@ df_unida
   - **Exportando Datos Finales**
 
 ```{r, eval=FALSE}
-write.csv(x = df_unida,file = "DatosCompletosAct1", row.names = F, fileEncoding = "UTF-8")
+write.csv(x = df_unida,file = "DatosCompletosAct1.csv", row.names = F, fileEncoding = "UTF-8")
 ```
 
 
@@ -728,7 +728,7 @@ datatable(df_unida,extensions = 'Buttons',
 - Exportando Datos con continentes
 
 ```{r,eval=FALSE}
-write.csv(x = df_unida,file = "DatosCompletosContinentesAct1", row.names = F, fileEncoding = "UTF-8")
+write.csv(x = df_unida,file = "DatosCompletosContinentesAct1.csv", row.names = F, fileEncoding = "UTF-8")
 
 ```
 
