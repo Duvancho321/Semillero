@@ -21,6 +21,8 @@ Para más información consulta:
 
 ##### \- <a href="https://duvancho321.github.io/Semillero/Recordatorio.html" target="_blank">Recordatorio</a>
 
-##### \- <a href="https://duvancho321.github.io/Semillero/Actividad1.html" target="_blank">Actividad 1</a>
+##### \- <a href="https://duvancho321.github.io/Semillero/Actividad1.html" target="_blank">Manipulacion de Datos</a>
 
-##### \- <a href="https://duvancho321.github.io/Semillero/Correlación.html" target="_blank">Correlación</a>
+##### \- <a href="https://duvancho321.github.io/Semillero/Correlación.html" target="_blank">Correlaciones</a>
+
+##### \- <a href="https://duvancho321.github.io/Semillero/Regresion.html" target="_blank">Regresión</a>

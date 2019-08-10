@@ -1,0 +1,173 @@
+---
+title: "Regresión"
+subtitle: "Bases de datos del Banco Mundial"
+author: 
+  - "Semillero R - FacCA"
+  - "Duvan Nieves"
+date: "`r Sys.Date()`"
+output: 
+  ioslides_presentation:
+    css: estilop.css
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F,
+                      message = F,
+                      warning = F,
+                      error = F,
+                      fig.align = "center")
+
+library(dplyr)
+```
+
+# Problema
+
+## Descripcion del problema
+
+- **Gasto militar vs Gasto en educacion:** Previamente se evidencio la relacion entre estas dos variables con graficos de dispersión y métricas de correlación. Se sugiere un modelo de regresión lineal simple que permita determinar el cambio en $Y$ dado $x$, es decir, que le modelo permitira establecer por cada unidad que aumenta el gasto militar, cuanto disminuye el gasto en educación.
+
+El modelo se puede expresar de la siguiente manera
+
+- Modelo Deterministico: $y = mx + b$
+- Modelo probabilistico 1: $Y = \beta_0\ +\ \beta_1 X_1\ +\ \epsilon_i$ 
+- Modelo probabilistico 2: $\hat{y} = \hat{\beta_0}\ +\ \hat{\beta_1} X_i$ 
+
+# Gasto Militar Vs Gasto Educación
+
+## Base de Datos
+
+```{r}
+#Lectura de datos
+Datos <- read.csv("DatosCompletosContinentesAct1.csv",encoding = "UTF-8")
+
+## Omitir NA
+df_reg <- Datos %>% 
+  filter(!is.na(gasto_edu16)) %>% 
+  filter(!is.na(gasto_militar17)) %>% 
+  select(pais,continente2,gasto_militar17,gasto_edu16) %>% 
+  filter(gasto_militar17<=10)
+
+df_reg
+
+```
+
+## Histograma gasto militar
+
+```{r}
+hist(df_reg$gasto_militar17,
+     xlab = "Gasto Militar",
+     ylab = "Frecuencia",
+     col = "forestgreen",
+     main = "Distribucion Gasto militar")
+abline(v = mean(df_reg$gasto_militar17),col="blue",lwd=3)
+```
+
+## Histograma gasto educacion
+
+```{r}
+hist(df_reg$gasto_edu16,
+     xlab = "Gasto Educacion",
+     ylab = "Frecuencia",
+     col = "forestgreen",
+     main = "Distribucion Gasto Educacion")
+abline(v = mean(df_reg$gasto_edu16),col="blue",lwd=3)
+```
+
+## Dispersión 1 (Con valor atipico)
+
+```{r}
+plot(x=Datos$gasto_militar17,
+     y=Datos$gasto_edu16,
+     xlab= "Gasto Militar",
+     ylab = "Gasto en Educacion",
+     main= "Relacion del G. Militar Vs G. en Educacion \n% del PIB",
+     pch=19)
+abline(lm(Datos$gasto_edu16~Datos$gasto_militar17),
+       col="blue",
+       lwd=2)
+
+```
+
+
+## Dispersión 2 (Sin valor atipico)
+
+```{r}
+plot(x=df_reg$gasto_militar17,
+     y=df_reg$gasto_edu16,
+     xlab= "Gasto Militar",
+     ylab = "Gasto en Educacion",
+     main= "Relacion del G. Militar Vs G. en Educacion \n% del PIB",
+     pch=19)
+abline(lm(df_reg$gasto_edu16~df_reg$gasto_militar17),
+       col="blue",
+       lwd=2)
+```
+
+
+## Coeficientes de correlación
+
+- **Correlacion de pearson con dato atipico:**
+
+```{r}
+cor(Datos$gasto_militar17,Datos$gasto_edu16,use = "pairwise.complete.obs")
+```
+
+- **Correlacion de pearson sin dato atipico:**
+
+```{r}
+cor(df_reg$gasto_militar17,df_reg$gasto_edu16)
+```
+
+## Test de hipotesis Cor sin dato atipico
+
+$$H_0: \rho = 0 \\ H_1: \rho \neq 0$$
+
+```{r}
+cor.test(Datos$gasto_militar17,Datos$gasto_edu16)
+```
+
+**Conclusión:** Como el P-value es mayor a $\alpha$ no existe evidencia para rechazar la hipotesis nula.
+
+## Test de hipotesis Cor sin dato atipico
+$$H_0: \rho = 0 \\ H_1: \rho \neq 0$$
+
+```{r}
+cor.test(df_reg$gasto_militar17,df_reg$gasto_edu16)
+```
+
+
+## Moedelo Tentativo
+El modelo tentativo se puede expresar de la siguiente manera
+
+$$G.Edu = \beta_0 + \beta_1 \ G.Militar$$
+
+## Regresión lineal simple en R
+
+```{r}
+mod1<- lm(df_reg$gasto_edu16~df_reg$gasto_militar17)
+summary(mod1)
+```
+
+
+```{r}
+```
+
+## Normalidad de Residuales
+
+## Homocedasticidad de Residuales
+
+## Independecia de Residuales
+
+## Modelo final
+
+## Intervalos de Confianza
+
+## Predicciones
+
+## Conclusiones
+
+```{r}
+
+```
+

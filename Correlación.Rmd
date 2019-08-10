@@ -1,5 +1,5 @@
 ---
-title: 'Correlación Y Regresion Lineal Simple'
+title: 'Correlaciones'
 subtitle: "Bases de datos del Banco Mundial"
 author:
   - "Semillero R - FacCA"
@@ -32,6 +32,7 @@ library(plotly)
 library(psych)
 library(GGally)
 library(corrplot)
+library(RColorBrewer)
 ```
 
 # Base de datos
@@ -138,7 +139,6 @@ ggplotly(
 ## Matriz Dispersión 1
 
 
-
 ```{r,fig.width=9,fig.height=12,dpi= 300}
 pairs.panels(
   Datos %>% select_if(is.numeric))
@@ -202,5 +202,29 @@ corrplot(matriz_cor)
 
 ```{r,dpi=300}
 corrplot(matriz_cor,method = "pie",type = "upper")
+```
+
+- **Otro Gráfico sin la diagonal**
+
+```{r,dpi=300}
+corrplot(matriz_cor,method = "pie",type ="upper",diag = F )
+```
+
+- **Matriz de correlacion completa metodo Color**
+
+```{r,dpi=300}
+corrplot( cor(
+  Datos %>% select_if(is.numeric),
+  use = "pairwise.complete.obs",
+  method = "pearson"),
+  method = "color",
+  type = "upper",
+  diag = F,
+  addgrid.col = "black",
+  tl.col = "black",
+  tl.srt = 45,
+  tl.cex = .8,
+  col= brewer.pal("BrBG",n=10)
+)
 ```
 
