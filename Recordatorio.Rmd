@@ -76,7 +76,7 @@ knitr::opts_chunk$set(echo = FALSE)
 - `range()`: devuelve el rango de un objeto numérico. Si hay valores `NAs` se debe agregar el argumento `na.rm = TRUE` - `range(x, na.rm = TRUE)`.
 - `quantile()`: devuelve cuartiles, deciles o percentiles. La función requiere del valor de probabilidad para las medidas de posición (`probs = 0.25`). Si hay valores `NAs` se debe agregar el argumento `na.rm = TRUE` - `quantile(x, probs = 0.25, na.rm = TRUE)`.
 
-##Funcionespara importar datos
+## Funcionespara importar datos
 
 - `load()`: funcion que permite importar informacion en formato .Rdata (Lenguaje especifico de datos de R).
 - `read.csv()`: funcion para importar datos en formato csv(separados por comas), donde el decimal esta definido por el punto (.).

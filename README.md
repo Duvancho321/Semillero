@@ -25,4 +25,4 @@ Para más información consulta:
 
 ##### \- <a href="https://duvancho321.github.io/Semillero/Correlación.html" target="_blank">Correlaciones</a>
 
-##### \- <a href="https://duvancho321.github.io/Semillero/Regresion.html" target="_blank">Regresión</a>
+##### \- <a href="https://duvancho321.github.io/Semillero/Regresion.html" target="_blank">Regresion</a>
